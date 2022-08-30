@@ -27,7 +27,6 @@ values('Flight to France','Trip to France');
 insert into Department (DepartName,Description)
 values('Flight to Germany','Trip to Germany');
 
-select * from Department ;
 
 insert into Employee(Empcode,FirstName,LastName,Birthday,Gender,Address,Salary)
 values('T2204FT','Nhat','Long','2000-09-03',0,'Italy',20000);
@@ -36,5 +35,31 @@ values('T22043T','Phan','Ha','1990-09-07',0,'France',10000);
 insert into Employee(Empcode,FirstName,LastName,Birthday,Gender,Address,Salary)
 values('T22023FT','Nguyen','Phuong','1998-05-06',0,'Germany',16000);
 
-select * from Employee;
 
+update Employee set Salary = Salary+(Salary*10/100);
+
+alter table Salary
+add constraint CK_Salary check(Salary>0)
+
+--create trigger tg_chkBirthday
+
+create index IX_DepartmentName on Department(DepartName);
+
+create view V_Epl_Dpm as 
+select FirstName,LastName,DepartName from Employee as e join Department as d on e.DepartID = d.Id 
+
+alter procedure sp_getAllEmp @ID char(6) as 
+select * from Employee where DepartID in 
+(select Id from  Department where Id = 
+(select DepartID from Employee where  EmpCode = @ID ))
+
+exec sp_getAllEmp @ID = 'T2204FT'
+
+
+create procedure sp_delDept @ID char(6) as 
+delete from Employee where EmpCode = @ID
+
+exec sp_delDept @ID = 'E1'
+
+select * from Employee
+select * from Department
