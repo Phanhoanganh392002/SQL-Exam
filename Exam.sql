@@ -59,7 +59,7 @@ exec sp_getAllEmp @ID = 'T2204FT'
 create procedure sp_delDept @ID char(6) as 
 delete from Employee where EmpCode = @ID
 
-exec sp_delDept @ID = 'E1'
+exec sp_delDept @ID = 'T2204FT'
 
 select * from Employee
 select * from Department
